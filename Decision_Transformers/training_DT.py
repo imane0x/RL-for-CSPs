@@ -1,7 +1,7 @@
 import argparse
 import torch
 import torch.nn.functional as F
-from transformers import TrainingArguments, Trainer, AutoTokenizer
+from transformers import TrainingArguments, Trainer
 from datasets import load_dataset
 from custom_data_collator import CustomDataCollator  
 from DT_model import TrainableDT  
@@ -11,9 +11,6 @@ from decision_transformer_collator import DecisionTransformerGymDataCollator
 def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device_train_batch_size, evaluation_strategy, learning_rate, weight_decay, warmup_ratio, optim, max_grad_norm):
     # Load the dataset
     dataset = load_dataset(dataset_name)
-
-    # Load the tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
 
     # Initialize the Decision Transformer Gym Data Collator
     collator = DecisionTransformerGymDataCollator(dataset['train'])
@@ -43,7 +40,6 @@ def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device
         train_dataset=dataset['train'],
         eval_dataset=dataset['test'],
         data_collator=collator,
-        tokenizer=tokenizer,
     )
 
     # Train the model
