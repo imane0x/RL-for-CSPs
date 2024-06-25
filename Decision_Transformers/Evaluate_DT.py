@@ -9,10 +9,38 @@ from decision_transformer import DecisionTransformerConfig  # Assuming this is w
 from decision_transformer_collator import DecisionTransformerGymDataCollator  # Assuming this is where the collator is defined
 from colabgymrender.recorder import Recorder  # Assuming you have this module for recording videos
 
-def get_action(model, states, actions, rewards, target_return, timesteps):
-    # Define the logic to get action from the model
-    # You need to implement this function based on your model's requirements
-    pass
+def get_action(model, states, actions, rewards, returns_to_go, timesteps):
+
+    states = states.reshape(1, -1, model.config.state_dim)
+    actions = actions.reshape(1, -1, model.config.act_dim)
+    returns_to_go = returns_to_go.reshape(1, -1, 1)
+    timesteps = timesteps.reshape(1, -1)
+
+    # The prediction is conditioned on up to 20 previous time-steps
+    states = states[:, -model.config.max_length :]
+    actions = actions[:, -model.config.max_length :]
+    returns_to_go = returns_to_go[:, -model.config.max_length :]
+    timesteps = timesteps[:, -model.config.max_length :]
+
+    # pad all tokens to sequence length, this is required if we process batches
+    padding = model.config.max_length - states.shape[1]
+    attention_mask = torch.cat([torch.zeros(padding), torch.ones(states.shape[1])])
+    attention_mask = attention_mask.to(dtype=torch.long).reshape(1, -1)
+    states = torch.cat([torch.zeros((1, padding, config.state_dim)), states], dim=1).float()
+    actions = torch.cat([torch.zeros((1, padding, 1)), actions], dim=1).float()
+    returns_to_go = torch.cat([torch.zeros((1, padding, 1)), returns_to_go], dim=1).float()
+    timesteps = torch.cat([torch.zeros((1, padding), dtype=torch.long), timesteps], dim=1)
+
+    # perform the prediction
+    state_preds, action_preds, return_preds = model.original_forward(
+            states=states,
+            actions=actions,
+            rewards=rewards,
+            returns_to_go=returns_to_go,
+            timesteps=timesteps,
+            attention_mask=attention_mask,
+            return_dict=False,)
+    return action_preds[0, -1]
 
 def evaluate_dts(model_name, dataset_name, output_dir, episodes, max_ep_len, target_return, scale,my_env):
     # Load the dataset and initialize collator
