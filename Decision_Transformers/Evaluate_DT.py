@@ -69,7 +69,6 @@ def evaluate_dts(model_name, dataset_name, episodes, max_ep_len, target_return, 
     for _ in range(episodes):
         episode_return, episode_length = 0, 0
         state, _ = env.reset()
-        print(state)
         target_return_tensor = torch.tensor(target_return, device=device, dtype=torch.float32).reshape(1, 1)
         states = torch.from_numpy(np.array(state)).reshape(1, state_dim).to(device=device, dtype=torch.float32)
         actions = torch.zeros((0, act_dim), device=device, dtype=torch.float32)
