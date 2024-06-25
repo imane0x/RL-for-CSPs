@@ -3,11 +3,10 @@ import numpy as np
 import argparse
 from transformers import AutoTokenizer
 from datasets import load_dataset
-from custom_data_collator import CustomDataCollator  # Assuming custom_data_collator.py is in the same directory
-from trainable_dt import TrainableDT  # Assuming trainable_dt.py is in the same directory
-from decision_transformer import DecisionTransformerConfig  # Assuming this is where the config is defined
-from decision_transformer_collator import DecisionTransformerGymDataCollator  # Assuming this is where the collator is defined
-from colabgymrender.recorder import Recorder  # Assuming you have this module for recording videos
+from custom_data_collator import CustomDataCollator  
+from trainable_dt import TrainableDT 
+from decision_transformer import DecisionTransformerConfig  
+from decision_transformer_collator import DecisionTransformerGymDataCollator  
 
 def get_action(model, states, actions, rewards, returns_to_go, timesteps):
 
