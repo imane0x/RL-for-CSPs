@@ -68,18 +68,3 @@ class NQueensEnv(gym.Env):
         for i, row in enumerate(board):
             row[self.state[i]] = 'Q'
             print(' '.join(row))
-
-# # Example of creating and using the environment
-# if __name__ == "__main__":
-#     env = NQueensEnv()
-#     state, _ = env.reset()
-#     print("Initial state:")
-#     env.render()
-#     # Example of taking a step
-#     action = env.action_space.sample()
-#     #print(action)
-#     state, reward, done, truncated, info = env.step(action)
-#    # print("\nState after one step:")
-#     print(state)
-#     env.render()
-#     print(f"Reward: {reward}, Done: {done}")
