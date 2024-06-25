@@ -1,0 +1,14 @@
+name: 
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+    - gym==0.21.0
+    - transformers
+    - datasets
+    - huggingface_hub
+    - accelerate
+    - "stable-baselines3[extra]>=2.0.0a4"
