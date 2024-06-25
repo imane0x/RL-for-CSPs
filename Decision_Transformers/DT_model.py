@@ -3,7 +3,7 @@ import torch.nn as nn
 class TrainableDT(DecisionTransformerModel):
     def __init__(self, config):
         super().__init__(config)
-        self.predict_action = nn.Linear(in_features=128, out_features=100, bias=True)
+        self.predict_action = nn.Linear(in_features=128, out_features=64, bias=True)
     def forward(self, **kwargs):
         output = super().forward(**kwargs)
         # add the DT loss
