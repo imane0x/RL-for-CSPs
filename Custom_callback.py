@@ -15,12 +15,9 @@ class CustomCallback(BaseCallback):
         self.rewards = []
 
     def _on_step(self) -> bool:
-        # Retrieve local variables
         obs = self.locals['obs_tensor']
         actions = self.locals['actions']
         rewards = self.locals['rewards']
-
-        # # Store the collected data
         self.states.append(obs)
         self.actions.append(actions)
         self.rewards.append(rewards)
