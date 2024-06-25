@@ -30,7 +30,7 @@ def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device
         warmup_ratio=warmup_ratio,
         optim=optim,
         max_grad_norm=max_grad_norm,
-        evaluation_strategy=evaluation_strategy,
+        
     )
 
     # Initialize the Trainer
