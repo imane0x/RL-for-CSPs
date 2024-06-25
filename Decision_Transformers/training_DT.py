@@ -16,7 +16,7 @@ def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device
     collator = DecisionTransformerGymDataCollator(dataset['train'])
     
     # Initialize the Decision Transformer configuration and custom model
-    config = DecisionTransformerConfig(state_dim=10, act_dim=1)  # Adjust these dimensions as necessary
+    config = DecisionTransformerConfig(state_dim=8, act_dim=1)  # Adjust these dimensions as necessary
     model = TrainableDT(config)
 
     # Define the training arguments
