@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+import numpy as np
+import torch
 @dataclass
 class DecisionTransformerGymDataCollator:
     return_tensors: str = "pt"
