@@ -3,7 +3,7 @@ from gymnasium import spaces
 import numpy as np
 
 class NQueensEnv(gym.Env):
-    def __init__(self, n=10):
+    def __init__(self, n=8):
         super(NQueensEnv, self).__init__()
         self.n = n  # Size of the board
         self.action_space = spaces.Discrete(n * n)  # Action space
