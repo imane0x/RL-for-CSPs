@@ -44,7 +44,7 @@ def evaluate_dts(model_name, dataset_name, episodes, max_ep_len, target_return, 
     # Load the dataset and initialize collator
     dataset = load_dataset(dataset_name)
     collator = DecisionTransformerGymDataCollator(dataset['train'])
-    config = DecisionTransformerConfig(state_dim=10, act_dim=1)
+    config = DecisionTransformerConfig(state_dim=8, act_dim=1)
     model = TrainableDT(config)
     model.load_state_dict(torch.load('model_10_DT.pth'))
     model = model.to("cpu")
