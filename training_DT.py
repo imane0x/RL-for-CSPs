@@ -48,7 +48,7 @@ def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device
 
     # Train the model
     trainer.train()
-
+    torch.save(model.state_dict(), 'model_DT.pth')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Decision Transformer Model with Custom Model")
