@@ -127,7 +127,7 @@ def evaluate_dts(model_name, dataset_name, episodes, max_ep_len, target_return, 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate Decision Transformer Model")
     parser.add_argument("--model_name", type=str, required=True, help="Path to the trained model")
-    parser.add_argument("--env", type=str, default "", help="env_name")
+    parser.add_argument("--env", type=str, default "nqueens", help="env_name")
     parser.add_argument("--dataset_name", type=str, required=True, help="Dataset name from Hugging Face")
     parser.add_argument("--episodes", type=int, default=100, help="Number of episodes to run for evaluation")
     parser.add_argument("--max_ep_len", type=int, default=20, help="Maximum episode length")
