@@ -1,7 +1,6 @@
 import torch
 import numpy as np
 import argparse
-from transformers import AutoTokenizer
 from datasets import load_dataset
 from custom_data_collator import CustomDataCollator  
 from trainable_dt import TrainableDT 
