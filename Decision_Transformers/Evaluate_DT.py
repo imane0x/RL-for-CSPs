@@ -40,7 +40,7 @@ def get_action(model, states, actions, rewards, returns_to_go, timesteps):
             return_dict=False,)
     return action_preds[0, -1]
 
-def evaluate_dts(model_name, dataset_name, output_dir, episodes, max_ep_len, target_return, scale,my_env):
+def evaluate_dts(model_name, dataset_name, episodes, max_ep_len, target_return, scale,my_env):
     # Load the dataset and initialize collator
     dataset = load_dataset(dataset_name)
     collator = DecisionTransformerGymDataCollator(dataset['train'])
@@ -129,7 +129,6 @@ if __name__ == "__main__":
     parser.add_argument("--model_name", type=str, required=True, help="Path to the trained model")
     parser.add_argument("--env", type=str, default "", help="env_name")
     parser.add_argument("--dataset_name", type=str, required=True, help="Dataset name from Hugging Face")
-    parser.add_argument("--output_dir", type=str, required=True, help="Output directory for the evaluation video")
     parser.add_argument("--episodes", type=int, default=100, help="Number of episodes to run for evaluation")
     parser.add_argument("--max_ep_len", type=int, default=20, help="Maximum episode length")
     parser.add_argument("--target_return", type=float, default=-15, help="Target return for evaluation")
