@@ -40,13 +40,13 @@ def get_action(model, states, actions, rewards, returns_to_go, timesteps):
             return_dict=False,)
     return action_preds[0, -1]
 
-def evaluate_dts(model_name, states_dim, dataset_name, episodes, max_ep_len, target_return, scale,my_env):
+def evaluate_dts(model_path, states_dim, dataset_name, episodes, max_ep_len, target_return, scale,my_env):
     # Load the dataset and initialize collator
     dataset = load_dataset(dataset_name)
     collator = DecisionTransformerGymDataCollator(dataset['train'])
     config = DecisionTransformerConfig(state_dim=states_dim, act_dim=1)
     model = TrainableDT(config)
-    model.load_state_dict(torch.load('model_10_DT.pth'))
+    model.load_state_dict(torch.load(model_path))
     model = model.to("cpu")
 
     # Environment setup
@@ -125,7 +125,7 @@ def evaluate_dts(model_name, states_dim, dataset_name, episodes, max_ep_len, tar
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate Decision Transformer Model")
-    parser.add_argument("--model_name", type=str, required=True, help="Path to the trained model")
+    parser.add_argument("--model_path", type=str, required=True, help="Path to the trained model")
     parser.add_argument("--states_dim", type=int, default = 8, help="number of queens")
     parser.add_argument("--dataset_name", type=str, required=True, help="Dataset name from Hugging Face")
     parser.add_argument("--episodes", type=int, default=100, help="Number of episodes to run for evaluation")
