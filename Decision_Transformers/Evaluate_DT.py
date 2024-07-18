@@ -6,7 +6,7 @@ from custom_data_collator import CustomDataCollator
 from trainable_dt import TrainableDT 
 from decision_transformer import DecisionTransformerConfig  
 from decision_transformer_collator import DecisionTransformerGymDataCollator  
-
+import N_queens_env
 def get_action(model, states, actions, rewards, returns_to_go, timesteps):
 
     states = states.reshape(1, -1, model.config.state_dim)
@@ -40,17 +40,17 @@ def get_action(model, states, actions, rewards, returns_to_go, timesteps):
             return_dict=False,)
     return action_preds[0, -1]
 
-def evaluate_dts(model_name, dataset_name, episodes, max_ep_len, target_return, scale,my_env):
+def evaluate_dts(model_name, states_dim, dataset_name, episodes, max_ep_len, target_return, scale,my_env):
     # Load the dataset and initialize collator
     dataset = load_dataset(dataset_name)
     collator = DecisionTransformerGymDataCollator(dataset['train'])
-    config = DecisionTransformerConfig(state_dim=8, act_dim=1)
+    config = DecisionTransformerConfig(state_dim=states_dim, act_dim=1)
     model = TrainableDT(config)
     model.load_state_dict(torch.load('model_10_DT.pth'))
     model = model.to("cpu")
 
     # Environment setup
-    env = gym.make(my_env)
+    env = NQueensenv(states_dim)
 
     # Evaluation settings
     device = "cpu"
@@ -126,7 +126,7 @@ def evaluate_dts(model_name, dataset_name, episodes, max_ep_len, target_return, 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate Decision Transformer Model")
     parser.add_argument("--model_name", type=str, required=True, help="Path to the trained model")
-    parser.add_argument("--env", type=str, default "nqueens", help="env_name")
+    parser.add_argument("--states_dim", type=int, default = 8, help="number of queens")
     parser.add_argument("--dataset_name", type=str, required=True, help="Dataset name from Hugging Face")
     parser.add_argument("--episodes", type=int, default=100, help="Number of episodes to run for evaluation")
     parser.add_argument("--max_ep_len", type=int, default=20, help="Maximum episode length")
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     evaluate_dts(
-        model_name=args.model_name,
+        states_dim=args.states_dim,
         dataset_name=args.dataset_name,
         output_dir=args.output_dir,
         episodes=args.episodes,
