@@ -6,7 +6,7 @@ from N_queens_env import NqueensEnv
 def train_ppo(board_size,env_name, total_timesteps, learning_rate, use_custom_callback):
     # Create the environment
     #env = gym.make(env_name)
-    env = NqueensEnv(board_size)
+    env = NqueensEnv(n = board_size)
     
     # Initialize the PPO model
     model = PPO('MlpPolicy', env, learning_rate=learning_rate, verbose=1)
@@ -22,10 +22,10 @@ def train_ppo(board_size,env_name, total_timesteps, learning_rate, use_custom_ca
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train PPO Model")
-    parser.add_argument("--env", type=str, required=True, help="Gym environment name")
+    parser.add_argument("--board_size", type=int, required=True, help="Size of the board")
     parser.add_argument("--timesteps", type=int, default=10000, help="Total timesteps for training")
     parser.add_argument("--lr", type=float, default=0.0003, help="Learning rate")
-    parser.add_argument("--use_callback", action='store_true', help="Use custom callback")
+    parser.add_argument("--use_callback", action='store_true', help="Use custom callback for storing trajectories")
 
     args = parser.parse_args()
 
