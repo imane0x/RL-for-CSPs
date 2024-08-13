@@ -2,10 +2,11 @@ import argparse
 from stable_baselines3 import PPO
 import gym
 from custom_callback import CustomCallback
-from N_queens_env import Nqueens
-def train_ppo(env_name, total_timesteps, learning_rate, use_custom_callback):
+from N_queens_env import NqueensEnv
+def train_ppo(board_size,env_name, total_timesteps, learning_rate, use_custom_callback):
     # Create the environment
-    env = gym.make(env_name)
+    #env = gym.make(env_name)
+    env = NqueensEnv(board_size)
     
     # Initialize the PPO model
     model = PPO('MlpPolicy', env, learning_rate=learning_rate, verbose=1)
