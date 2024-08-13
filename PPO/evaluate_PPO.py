@@ -2,11 +2,12 @@ import numpy as np
 import argparse
 import time
 from stable_baselines3 import PPO  
+from N_queens_env import NqueensEnv
 import gym
 
-def evaluate_ppo(model_path, env_name, episodes):
+def evaluate_ppo(model_path, board_size, episodes):
     # Load the environment
-    env = gym.make(env_name)
+    env = NqueensEnv(n=board_size)
 
     # Load the trained PPO model
     model = PPO.load(model_path)
@@ -55,7 +56,7 @@ def evaluate_ppo(model_path, env_name, episodes):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate PPO Model")
     parser.add_argument("--model_path", type=str, required=True, help="Path to the trained PPO model")
-    parser.add_argument("--env_name", type=str, required=True, help="Environment name")
+    parser.add_argument("--board_size", type=int, required=True, help="Size of the board")
     parser.add_argument("--episodes", type=int, default=100, help="Number of episodes to run for evaluation")
 
     args = parser.parse_args()
