@@ -8,7 +8,7 @@ from DT_model import TrainableDT
 from decision_transformer import DecisionTransformerConfig  
 from decision_transformer_collator import DecisionTransformerGymDataCollator  
 
-def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device_train_batch_size, evaluation_strategy, learning_rate, weight_decay, warmup_ratio, optim, max_grad_norm):
+def train_dts(state_dim,dataset_name, output_dir, num_train_epochs, per_device_train_batch_size, learning_rate, weight_decay, warmup_ratio, optim, max_grad_norm):
     # Load the dataset
     dataset = load_dataset(dataset_name)
 
@@ -16,7 +16,7 @@ def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device
     collator = DecisionTransformerGymDataCollator(dataset['train'])
     
     # Initialize the Decision Transformer configuration and custom model
-    config = DecisionTransformerConfig(state_dim=8, act_dim=1)  # Adjust these dimensions as necessary
+    config = DecisionTransformerConfig(state_dim=state_dim, act_dim=1)  # Adjust these dimensions as necessary
     model = TrainableDT(config)
 
     # Define the training arguments
@@ -48,12 +48,11 @@ def train_dts(model_name, dataset_name, output_dir, num_train_epochs, per_device
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Decision Transformer Model with Custom Model")
-    parser.add_argument("--model_name", type=str, required=True, help="Model name from Hugging Face to load the configuration")
+    parser.add_argument("--state_dim", type=str, required=True, help="Board Size")
     parser.add_argument("--dataset_name", type=str, required=True, help="Dataset name from Hugging Face")
     parser.add_argument("--output_dir", type=str, required=True, help="Output directory for the trained model")
     parser.add_argument("--epochs", type=int, default=3, help="Number of training epochs")
     parser.add_argument("--batch_size", type=int, default=8, help="Batch size per device during training")
-    parser.add_argument("--eval_strategy", type=str, default="epoch", choices=["no", "steps", "epoch"], help="Evaluation strategy")
     parser.add_argument("--learning_rate", type=float, default=1e-4, help="Learning rate")
     parser.add_argument("--weight_decay", type=float, default=1e-4, help="Weight decay")
     parser.add_argument("--warmup_ratio", type=float, default=0.1, help="Warmup ratio")
@@ -63,12 +62,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     train_dts(
-        model_name=args.model_name,
+        state_dim = args.state_dim,
         dataset_name=args.dataset_name,
         output_dir=args.output_dir,
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.batch_size,
-        evaluation_strategy=args.eval_strategy,
         learning_rate=args.learning_rate,
         weight_decay=args.weight_decay,
         warmup_ratio=args.warmup_ratio,
