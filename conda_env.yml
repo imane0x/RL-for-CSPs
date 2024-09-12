@@ -4,6 +4,9 @@ channels:
   - defaults
 dependencies:
   - python=3.8
+  - tensorflow=2.10  
+  - cudatoolkit=11.2  
+  - cudnn
   - pip
   - pip:
     - gym
@@ -12,3 +15,11 @@ dependencies:
     - huggingface_hub
     - accelerate
     - "stable-baselines3[extra]>=2.0.0a4"
+
+
+
+
+
+
+
+
