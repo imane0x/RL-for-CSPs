@@ -6,7 +6,7 @@ dependencies:
   - python=3.8
   - pip
   - pip:
-    - gym==0.21.0
+    - gym
     - transformers
     - datasets
     - huggingface_hub
