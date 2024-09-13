@@ -2,12 +2,12 @@ import numpy as np
 import argparse
 import time
 from stable_baselines3 import PPO  
-from N_queens_env import NqueensEnv
+from N_queens_env import NQueensEnv
 import gym
 
 def evaluate_ppo(model_path, board_size, episodes):
     # Load the environment
-    env = NqueensEnv(n=board_size)
+    env = NQueensEnv(n=board_size)
 
     # Load the trained PPO model
     model = PPO.load(model_path)
