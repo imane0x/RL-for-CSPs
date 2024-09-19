@@ -14,7 +14,7 @@ conda env create -f conda_env.yml
 ### PPO
 
 ```
-python PPO/train_ppo.py  --board_size <boardsize> --timesteps <total_timesteps> --lr <learning_rate> [--use_callback]
+python PPO/train_ppo.py  --board_size <boardsize> --timesteps <total_timesteps> --lr <learning_rate> 
 ```
 ### DT
 
